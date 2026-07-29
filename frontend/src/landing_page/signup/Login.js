@@ -38,9 +38,12 @@ const Login = () => {
         },
         { withCredentials: true }
       ); 
+      console.log("Login Response",data);
       if (data.success) {
       // Redirect to Dashboard application
-      window.location.href = "http://localhost:3001";
+      // window.location.href = `http://localhost:3001/?username=${encodeURIComponent(data.user.username)}`;;
+      localStorage.setItem("user",JSON.stringify(data.user));
+      window.location.href ="http://localhost:3001";
     } else {
       alert(data.message);
     }

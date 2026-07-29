@@ -29,7 +29,7 @@ module.exports.Login = async (req, res, next) => {
   try {
     
     const { email, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     if(!email || !password ){
       return res.json({message:'All fields are required'})
     }
@@ -39,18 +39,23 @@ module.exports.Login = async (req, res, next) => {
       return res.json({message:'Incorrect password or email' }) 
     }
     // console.log(auth);
-    // const auth = await bcrypt.compare(password,user.password)
-    // if (!auth) {
-    //   return res.json({message:'Incorrect password or email' }) 
-    // }
+    const auth = await bcrypt.compare(password,user.password)
+    if (!auth) {
+      return res.json({message:'Incorrect password or email' }) 
+    }
     // console.log(token);
-    //  const token = createSecretToken(user._id);
-    //  res.cookie("token", token, {
-    //    withCredentials: true,
-    //    httpOnly: false,
-    //  });
+     const token = createSecretToken(user._id);
+     res.cookie("token", token, {
+       withCredentials: true,
+       httpOnly: false,
+     });
      
-     res.status(201).json({ message: "User logged in successfully", success: true });
+     res.status(201).json({ message: "User logged in successfully", success: true,
+      user:{
+        username:user.username,
+        email:user.email
+      },
+      });
      next()
   } catch (error) {
     console.error(error);

@@ -18,7 +18,7 @@ const jwt = require("jsonwebtoken");
 //   success: true,
 //   message: "Login successful",
 // });
-
+console.log("TOKEN_KEY:", process.env.TOKEN_KEY);
 module.exports.createSecretToken = (id) => {
   return jwt.sign(
     { id },

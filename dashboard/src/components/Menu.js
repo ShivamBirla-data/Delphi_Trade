@@ -1,10 +1,41 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    const verifyUser = async () => {
+      console.log("verify function started")
+      try {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+
+        console.log("Stored User",storedUser);
+        if (storedUser) {
+          setUser(storedUser);
+        }
+
+        const { data } = await axios.post(
+          "http://localhost:3002/verify",
+          {},
+          {
+            withCredentials: true,
+          },
+        );
+
+        if (!data.status) {
+          window.location.href = "http://localhost:3000/login";
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    verifyUser();
+  }, []);
+  console.log("Current User State ", user);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
@@ -88,12 +119,22 @@ const Menu = () => {
               </p>
             </Link>
           </li>
+           <li>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="http://localhost:3000/login"
+              onClick={() => handleMenuClick(7)}
+            >
+              <p className={selectedMenu === 7 ? activeMenuClass : menuClass}>
+                Logout
+              </p>
+            </Link>
+          </li>
         </ul>
-        <hr />
-        <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
-        </div>
+        
+        {/* <div className="profile" onClick={handleProfileClick}>
+          <p>{user.name}</p>
+        </div> */}
       </div>
     </div>
   );
