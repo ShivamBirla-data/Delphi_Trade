@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { CookiesProvider } from 'react-cookie';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
@@ -14,15 +15,19 @@ import Support from './landing_page/support/SupportPage';
 import Navbar from './landing_page/Navbar';
 import Footer from './landing_page/Footer';
 import NotFound from './landing_page/NotFound';
+import Home from './landing_page/signup/Home';
+//import Dashboard from '../../dashboard/src/components/Dashboard';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <CookiesProvider>
   <BrowserRouter>
   <Navbar />
   <Routes>
    
     <Route path="/"         element={<HomePage />} />
     <Route path="/signup"   element={<Signup />} />
-    <Route path="/login"   element={<Login />} />
+    <Route path="/login"    element={<Login />} />
+    <Route path="/home"     element={<Home />} />
     <Route path="/about"    element={<AboutPage/>} />
     <Route path="/product"  element={<ProductPage/>} />
     <Route path="/pricing"  element={<PricingPage/>} />
@@ -33,6 +38,7 @@ root.render(
   </Routes>
   <Footer />
   </BrowserRouter>
+  </CookiesProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 function Navbar() {
   return (
    
-      <nav class="navbar navbar-expand-lg border-bottom " style={{backgroundColor:"#FFF"}}>
-        <div class="container-fluid">
-          <Link class="navbar-brand" to={"/"}>
+      <nav className="navbar navbar-expand-lg border-bottom " style={{backgroundColor:"#FFF"}}>
+        <div className="container-fluid">
+          <Link className="navbar-brand" to={"/"}>
             <img src="media/img/delphi.png" style={{width:"25%"}}  alt="Logo"/>
           </Link>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -17,37 +17,37 @@ function Navbar() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
           
-            <form class="d-flex" role="search">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to={"/signup"}>
+            <form className="d-flex" role="search">
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to={"/signup"}>
                   SignUp
                 </Link>
               </li>
-              <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to={"/about"}>
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to={"/about"}>
                   About
                 </Link>
               </li>
              
-               <li class="nav-item">
-                <Link class="nav-link active" aria-current="page"  to={"/product"}>
+               <li className="nav-item">
+                <Link className="nav-link active" aria-current="page"  to={"/product"}>
                   Product
                 </Link>
               </li>
 
-               <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to={"/pricing"}>
+               <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to={"/pricing"}>
                   Pricing
                 </Link>
               </li>
 
-               <li class="nav-item">
-                <Link class="nav-link active" aria-current="page" to={"/support"}>
+               <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to={"/support"}>
                   Support
                 </Link>
               </li>

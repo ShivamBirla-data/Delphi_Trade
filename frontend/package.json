@@ -10,6 +10,8 @@
     "ajv": "^8.20.0",
     "ajv-keywords": "^5.1.0",
     "axios": "^1.18.1",
+    "axois": "^0.0.1-security",
+    "cors": "^2.8.6",
     "react": "^19.2.7",
     "react-cookie": "^8.1.2",
     "react-dom": "^19.2.7",

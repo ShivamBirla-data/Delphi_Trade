@@ -32,18 +32,24 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/login",
+        "http://localhost:3002/login",
         {
           ...inputValue,
         },
         { withCredentials: true }
-      );
+      ); 
+      if (data.success) {
+      // Redirect to Dashboard application
+      window.location.href = "http://localhost:3001";
+    } else {
+      alert(data.message);
+    }
       console.log(data);
       const { success, message } = data;
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/");
+          navigate("/home");
         }, 1000);
       } else {
         handleError(message);

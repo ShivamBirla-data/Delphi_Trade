@@ -8,21 +8,30 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+
+
 const { HoldingModel } = require("./model/HoldingModel");
 const { PositionModel } = require("./model/PositionModel");
 const { OrderModel } = require("./model/OrderModel");
+const { userModel } = require('./model/userModel.js');
+// const { LoginModel } = require('./model/LoginModel.js')
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 const cookieParser = require("cookie-parser");
-const authRoute = require('./Routes/AuthRoute.js')
+const AuthRoute = require('./Routes/AuthRoute.js')
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
-app.use("/",authRoute);
+app.use(express.urlencoded({extended:true}));
+
+app.use("/",AuthRoute);
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
 //     {
@@ -211,6 +220,14 @@ app.post("/users" , async (req,res)=>{
   newSignup.save();
   res.send("Signup Successfully...");
 })
+// app.post("/Users" , async (req,res)=>{
+//   let newLogin = new LoginModel({
+//     email : req.body.email,
+//     password: req.body.password
+//   });
+//   newSignup.save();
+//   res.send("Login Successfully...");
+// })
 
 app.post("/newOrder", async (req, res) => {
   let newOrder = new OrderModel({
@@ -225,6 +242,7 @@ app.post("/newOrder", async (req, res) => {
   res.send("Order saved!");
 });
 
+console.log(process.env.JWT_SECRET);
 app.listen(PORT, () => {
   console.log("App started!");
   mongoose.connect(uri);
