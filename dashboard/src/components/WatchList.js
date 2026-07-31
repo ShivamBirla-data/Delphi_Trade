@@ -15,8 +15,11 @@ import {
 
 import { watchlist } from "../data/data";
 import { DoughnutChart } from "./DoughnoutChart";
-
+import SellActionWindow from "./SellActionWindow";
+import SellDashboard from "./SellDashboard";
 const labels = watchlist.map((subArray) => subArray["name"]);
+
+
 
 const WatchList = () => {
   const data = {
@@ -45,7 +48,24 @@ const WatchList = () => {
       },
     ],
   };
+const handleSell = async (name, qty, price) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3002/sell",
+          {
+            name: name,
+            qty: qty,
+            price: price,
+            mode: "SELL",
+          }
+    );
 
+    console.log(response.data);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
   // export const data = {
   //   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
   // datasets: [
@@ -136,6 +156,10 @@ const WatchListActions = ({ uid }) => {
     generalContext.openBuyWindow(uid);
   };
 
+  const handleSellClick = () => {
+    SellDashboard.SellActionWindow(uid);
+  };
+
   return (
     <span className="actions">
       <span>
@@ -153,6 +177,7 @@ const WatchListActions = ({ uid }) => {
           placement="top"
           arrow
           TransitionComponent={Grow}
+          onClick={handleSellClick}
         >
           <button className="sell">Sell</button>
         </Tooltip>

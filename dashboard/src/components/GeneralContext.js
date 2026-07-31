@@ -5,6 +5,8 @@ import BuyActionWindow from "./BuyActionWindow";
 const GeneralContext = React.createContext({
   openBuyWindow: (uid) => {},
   closeBuyWindow: () => {},
+  openSellWindow: (uid) => {},
+  closeSellWindow: () => {}
 });
 
 export const GeneralContextProvider = (props) => {

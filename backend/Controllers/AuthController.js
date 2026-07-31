@@ -1,4 +1,5 @@
 const User = require("../model/userModel");
+const Order = require("../model/OrderModel");
 // const Users = require("../model/LoginModel");
 const { createSecretToken } = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
@@ -50,12 +51,7 @@ module.exports.Login = async (req, res, next) => {
        httpOnly: false,
      });
      
-     res.status(201).json({ message: "User logged in successfully", success: true,
-      user:{
-        username:user.username,
-        email:user.email
-      },
-      });
+     res.status(201).json({ message: "User logged in successfully", success: true });
      next()
   } catch (error) {
     console.error(error);

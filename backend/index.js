@@ -14,7 +14,9 @@ const { HoldingModel } = require("./model/HoldingModel");
 const { PositionModel } = require("./model/PositionModel");
 const { OrderModel } = require("./model/OrderModel");
 const { userModel } = require('./model/userModel.js');
-// const { LoginModel } = require('./model/LoginModel.js')
+const { FundModel } = require('./model/FundModel.js');
+
+
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
@@ -222,6 +224,15 @@ app.post("/users" , async (req,res)=>{
   newSignup.save();
   res.send("Signup Successfully...");
 })
+app.get("/getOrder",async(req,res)=>{
+  let getOrder = await OrderModel.find({});
+  res.json(getOrder);
+})
+// Get Fund Details
+app.get("/funds", async (req, res) => {
+  let funds = await FundModel.find({});
+  res.json(funds);
+});
 // app.post("/Users" , async (req,res)=>{
 //   let newLogin = new LoginModel({
 //     email : req.body.email,
@@ -243,6 +254,22 @@ app.post("/newOrder", async (req, res) => {
 
   res.send("Order saved!");
 });
+//How to create a sell button api
+app.post("/sell", async (req, res) => {
+  let newOrder = new OrderModel({
+    name: req.body.name,
+    qty: req.body.qty,
+    price: req.body.price,
+    mode: req.body.mode,
+  })
+  newOrder.save();
+  res.send("Sell Saved!");
+});
+app.get("/newOrder", async (req, res) => {
+  let newOrder = await OrderModel.find({});
+  res.json(newOrder);
+});
+
 
 console.log(process.env.JWT_SECRET);
 app.listen(PORT, () => {
