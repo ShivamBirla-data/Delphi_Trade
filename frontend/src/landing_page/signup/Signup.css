@@ -275,7 +275,12 @@
     border-radius: 12px;
     padding: 20px;
     margin: auto;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    /* box-shadow: 0 4px 12px rgba(0,0,0,0.1); */
+    
+}
+.card:hover{
+    box-shadow: 0 5px 30px rgba(56, 12, 160, 0.2);
+    
 }
 .icon{
     
