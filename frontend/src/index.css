@@ -91,32 +91,3 @@ body {
   margin-top: 15px;
   font-weight: bold;
 }
-/* *,
-::before,
-::after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-} */
-
-/* label {
-  font-size: 1.2rem;
-  color: #656262;
-} */
-
-/* html,
-body {
-  height: 100%;
-  width: 100%;
-} */
-
-/* body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-} */
-
- 

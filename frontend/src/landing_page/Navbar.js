@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+ import React from "react";
+ import { Link } from "react-router-dom";
+import './Navbar.css';
 function Navbar() {
   return (
    
@@ -23,9 +24,9 @@ function Navbar() {
             <form className="d-flex" role="search">
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to={"/signup"}>
-                  SignUp
+               <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to={"/"}>
+                  Home
                 </Link>
               </li>
               <li className="nav-item">
@@ -51,7 +52,11 @@ function Navbar() {
                   Support
                 </Link>
               </li>
-              
+                <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to={"/signup"}>
+                  SignUp
+                </Link>
+              </li>
             </ul>
             </div>
             </form>

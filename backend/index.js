@@ -256,20 +256,62 @@ app.post("/newOrder", async (req, res) => {
 });
 //How to create a sell button api
 app.post("/sell", async (req, res) => {
-  let newOrder = new OrderModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  })
-  newOrder.save();
-  res.send("Sell Saved!");
+  try {
+    // console.log("Request Body:", req.body);
+
+    const { name, qty, price } = req.body;
+
+    // console.log(name, qty, price);
+
+    const order = new OrderModel({
+      name: req.body.name,
+      qty: req.body.qty,
+      price: req.body.price,
+      mode: "SELL",
+    });
+
+    await order.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Sell Order Saved",
+      order,
+    });
+
+  } catch (error) {
+    console.error("Sell API Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 });
 app.get("/newOrder", async (req, res) => {
   let newOrder = await OrderModel.find({});
   res.json(newOrder);
 });
+//How to create a add Funds API
+app.post("/addFunds", async (req, res) => {
+  try {
+    console.log("Request Body:", req.body);
+    const fund = new Fund({
+      amount: req.body.amount,
+    });
 
+    await fund.save();
+
+    res.json({
+      success: true,
+      message: "Funds Added Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 console.log(process.env.JWT_SECRET);
 app.listen(PORT, () => {

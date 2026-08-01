@@ -7,10 +7,21 @@ import Stats from './Stats';
 import OpenAccount from '../OpenAccount';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function HomePage() {
+      const navigate = useNavigate();
+
+  useEffect(() => {
+    const navEntries = performance.getEntriesByType("navigation");
+
+    if (navEntries.length > 0 && navEntries[0].type === "reload") {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
+
     return ( 
        
     <>

@@ -86,11 +86,14 @@
 // };
 
 // export default Funds;
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from 'axios';
+import  GeneralContext from "./GeneralContext";
+
 function Funds() {
   const [funds, setFunds] = useState([]);
-
+   const { openFundWindow } = useContext(GeneralContext);
+   console.log("openFundWindow =", openFundWindow);
   useEffect(() => {
     const getFunds = async () => {
       try {
@@ -116,7 +119,7 @@ function Funds() {
 
       {/* Buttons */}
       <div style={{ marginBottom: "20px" }}>
-        <button
+        <button 
           style={{
             padding: "10px 20px",
             backgroundColor: "#387ed1",
@@ -125,8 +128,13 @@ function Funds() {
             borderRadius: "5px",
             marginRight: "10px",
             cursor: "pointer",
-          }}
-          onClick={() => alert("Add Funds Clicked")}
+          }} 
+          // onClick={openFundWindow}
+            onClick={() => {
+    console.log("Button Clicked");
+    openFundWindow();
+  }}
+
         >
           Add Funds
         </button>

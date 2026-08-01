@@ -16,7 +16,7 @@ import {
 import { watchlist } from "../data/data";
 import { DoughnutChart } from "./DoughnoutChart";
 import SellActionWindow from "./SellActionWindow";
-import SellDashboard from "./SellDashboard";
+// import SellDashboard from "./SellDashboard";
 const labels = watchlist.map((subArray) => subArray["name"]);
 
 
@@ -121,6 +121,7 @@ export default WatchList;
 
 const WatchListItem = ({ stock }) => {
   const [showWatchlistActions, setShowWatchlistActions] = useState(false);
+  const { openSellWindow } = useContext(GeneralContext);
 
   const handleMouseEnter = (e) => {
     setShowWatchlistActions(true);
@@ -157,7 +158,7 @@ const WatchListActions = ({ uid }) => {
   };
 
   const handleSellClick = () => {
-    SellDashboard.SellActionWindow(uid);
+    generalContext.openSellWindow(uid);
   };
 
   return (

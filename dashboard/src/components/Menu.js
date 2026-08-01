@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -122,7 +123,7 @@ const Menu = () => {
            <li>
             <Link
               style={{ textDecoration: "none" }}
-              to="http://localhost:3000/login"
+              to="http://localhost:3000/"
               onClick={() => handleMenuClick(7)}
             >
               <p className={selectedMenu === 7 ? activeMenuClass : menuClass}>

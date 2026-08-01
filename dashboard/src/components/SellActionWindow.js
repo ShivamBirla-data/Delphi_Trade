@@ -1,117 +1,70 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import GeneralContext from "./GeneralContext";
+import "./SellActionWindow.css";
+import { useNavigate } from "react-router-dom";
+function SellActionWindow({ uid }) {
+  const { closeSellWindow } = useContext(GeneralContext);
 
-function SellActionWindow({ stock, onClose }) {
   const [qty, setQty] = useState(1);
-  const [price, setPrice] = useState(stock.price);
+  const [price, setPrice] = useState(0);
+  const navigate = useNavigate();
 
   const handleSell = async () => {
     try {
       await axios.post("http://localhost:3002/sell", {
-        name: stock.name,
+        name: uid,
         qty,
         price,
         mode: "SELL",
       });
 
-      alert("Sell Order Placed Successfully");
-      onClose();
+      alert("Sell Order Placed");
+      closeSellWindow();
+      window.location.reload();
+       // Redirect to Orders page
+    navigate("/orders");
+
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modal}>
+    <div className="sell-overlay">
+      <div className="sell-window">
+
         <h2>Sell Stock</h2>
 
-        <label>Stock Name</label>
-        <input
-          type="text"
-          value={stock.name}
-          readOnly
-          style={styles.input}
-        />
+        <h3>{uid}</h3>
 
-        <label>Quantity</label>
         <input
           type="number"
+          placeholder="Quantity"
           value={qty}
-          onChange={(e) => setQty(Number(e.target.value))}
-          style={styles.input}
+          onChange={(e) => setQty(e.target.value)}
         />
 
-        <label>Price</label>
         <input
           type="number"
+          placeholder="Price"
           value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
-          style={styles.input}
+          onChange={(e) => setPrice(e.target.value)}
         />
 
-        <div style={{ marginTop: "20px" }}>
-          <button style={styles.sellBtn} onClick={handleSell}>
+        <div className="buttons">
+          <button className="sell-btn" onClick={handleSell}>
             SELL
           </button>
 
-          <button style={styles.cancelBtn} onClick={onClose}>
+          <button className="cancel-btn" onClick={closeSellWindow}>
             Cancel
           </button>
         </div>
+
       </div>
     </div>
   );
 }
-
-const styles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(0,0,0,0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  modal: {
-    width: "400px",
-    background: "#fff",
-    padding: "25px",
-    borderRadius: "10px",
-    boxShadow: "0 5px 15px rgba(0,0,0,0.3)",
-  },
-
-  input: {
-    width: "100%",
-    padding: "10px",
-    marginTop: "5px",
-    marginBottom: "15px",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-  },
-
-  sellBtn: {
-    background: "red",
-    color: "#fff",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginRight: "10px",
-  },
-
-  cancelBtn: {
-    background: "gray",
-    color: "#fff",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-};
 
 export default SellActionWindow;

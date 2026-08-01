@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { MdDashboard } from "react-icons/md";
+import { FaTachometerAlt } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import './Signup.css'
+import "./Signup.css";
 const Signup = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState({
@@ -32,12 +34,11 @@ const Signup = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        
         "http://localhost:3002/signup",
         {
           ...inputValue,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       const { success, message } = data;
       if (success) {
@@ -62,8 +63,16 @@ const Signup = () => {
   return (
     <div className="form_container">
       <h2>Signup Account</h2>
+      
       <form onSubmit={handleSubmit}>
+        <div className="dashboard-btn">
+  <Link to="/">
+    <MdDashboard className="dashboard-icon" />
+    Dashboard
+  </Link>
+</div>
         <div>
+          
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -93,10 +102,12 @@ const Signup = () => {
             onChange={handleOnChange}
           />
         </div>
+
         <button type="submit">Submit</button>
         <span>
           Already have an account? <Link to={"/login"}>Login</Link>
         </span>
+     
       </form>
       <ToastContainer />
     </div>

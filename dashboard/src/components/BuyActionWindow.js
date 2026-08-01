@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import './BuyActionWindow.css';
 import GeneralContext from "./GeneralContext";
+import { useNavigate } from "react-router-dom";
 
 const BuyActionWindow = ({ uid }) => {
 
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0);
-
   const { closeBuyWindow } = useContext(GeneralContext);
+  const navigate = useNavigate();
 
   const handleBuyClick = async () => {
 
@@ -23,6 +24,9 @@ const BuyActionWindow = ({ uid }) => {
       });
 
       closeBuyWindow();
+       window.location.reload();
+       // Redirect to Orders page
+      navigate("/orders");
 
     } catch (err) {
       console.log(err);
