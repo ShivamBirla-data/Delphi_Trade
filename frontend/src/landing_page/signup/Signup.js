@@ -4,6 +4,9 @@ import axios from "axios";
 import { MdDashboard } from "react-icons/md";
 import { FaTachometerAlt } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
+import { GiTakeMyMoney } from "react-icons/gi";
+import { FaChartLine } from "react-icons/fa";
+import { MdTrendingUp } from "react-icons/md";
 import "./Signup.css";
 const Signup = () => {
   const navigate = useNavigate();
@@ -61,55 +64,103 @@ const Signup = () => {
   };
 
   return (
-    <div className="form_container">
-      <h2>Signup Account</h2>
-      
-      <form onSubmit={handleSubmit}>
-        <div className="dashboard-btn">
-  <Link to="/">
-    <MdDashboard className="dashboard-icon" />
-    Dashboard
-  </Link>
-</div>
-        <div>
-          
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            placeholder="Enter your email"
-            onChange={handleOnChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Username</label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            placeholder="Enter your username"
-            onChange={handleOnChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            placeholder="Enter your password"
-            onChange={handleOnChange}
-          />
-        </div>
+    <div className="main-container">
+      {/* Left Panel */}
+      <div className="left-panel">
+        <div className="overlay"></div>
 
-        <button type="submit">Submit</button>
-        <span>
-          Already have an account? <Link to={"/login"}>Login</Link>
-        </span>
-     
-      </form>
-      <ToastContainer />
+        <div className="left-content">
+          <div className="dashboard-btn">
+            <Link to="/">
+              <MdDashboard className="dashboard-icon" />
+              Dashboard
+            </Link>
+          </div>
+
+          <h1>Delphi Trade</h1>
+
+          <p>
+            Delphi Trade is a smart investment platform for stocks, mutual
+            funds, and IPOs. Trade securely, monitor your portfolio, and grow
+            your wealth with confidence.
+          </p>
+
+          <div className="feature-box">
+            <div className="card">
+              <GiTakeMyMoney className="icon" />
+              <h6>Mutual Funds</h6>
+            </div>
+            <div className="card">
+              <FaChartLine className="icon" />
+              <h6>Stock</h6>
+            </div>
+            <div className="card">
+              <MdTrendingUp className="icon" />
+              <h6>IPO</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Panel */}
+      <div className="right-panel">
+        <div className="login-card">
+          <div className="card-header">
+            <h2>Create Account</h2>
+            <p>Sign up to continue</p>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="input-group-custom">
+              <label>Email Address</label>
+              <div className="input-box">
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleOnChange}
+                  placeholder="Enter your email"
+                />
+              </div>
+            </div>
+
+            <div className="input-group-custom">
+              <label>Username</label>
+              <div className="input-box">
+                <input
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={handleOnChange}
+                  placeholder="Enter username"
+                />
+              </div>
+            </div>
+
+            <div className="input-group-custom">
+              <label>Password</label>
+              <div className="input-box">
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handleOnChange}
+                  placeholder="Enter password"
+                />
+              </div>
+            </div>
+
+            <button className="login-btn" type="submit">
+              Create Account
+            </button>
+
+            <div className="register-link">
+              Already have an account?
+              <Link to="/login"> Login</Link>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

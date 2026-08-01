@@ -200,3 +200,150 @@
 .dashboard-icon{
     font-size:22px;
 }
+/* Full Page */
+
+.main-container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* Left Panel */
+
+.left-panel{
+    width:50%;
+    min-height: 100vh;
+    /* background:linear-gradient(135deg,#2563eb,#1e3a8a); */
+    background-image:url("/public/Media/img/signup_logo.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    color:white;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,.25);
+}
+
+.left-content{
+    position:relative;
+    z-index:1;
+    padding:50px;
+}
+
+.left-content h1{
+    font-size:42px;
+    margin:35px 0;
+}
+
+.left-content p{
+    font-size:18px;
+    line-height:1.7;
+    margin-bottom: -100px;
+    text-align: center;
+}
+.dashboard-btn{
+    margin-top: -50px;
+}
+
+/* Feature Box */
+
+.feature-box{
+    display: flex;
+    flex-direction:center;
+    gap:15px;
+    margin-top:200px;
+}
+
+.feature-box div{
+    /* background:rgba(255,255,255,.15); */
+    padding:15px;
+    border-radius:10px;
+}
+.card{
+     width: 150px;
+    text-align: center;
+    display: center;
+    justify-content: center;
+    flex-direction: center;
+    /* background: #fff; */
+    border-radius: 12px;
+    padding: 20px;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.icon{
+    
+    font-size: 80px;
+
+    
+}
+
+/* Right Panel */
+
+.right-panel{
+    width:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f5f7fb;
+}
+
+/* Card */
+
+.login-card{
+    width:420px;
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+}
+
+.card-header h2{
+    margin-bottom:5px;
+}
+
+.card-header p{
+    color:#666;
+}
+
+/* Input */
+
+.input-group-custom{
+    margin-bottom:20px;
+}
+
+.input-group-custom label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.input-box input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+/* Button */
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    background:#1d4ed8;
+}
