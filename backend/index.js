@@ -1,6 +1,5 @@
 require("dotenv").config();
-const dns = require("dns");
-dns.setServers(["1.1.1.1","8.8.8.8"]);      
+   
 
 
 const express = require("express");
@@ -14,7 +13,7 @@ const { HoldingModel } = require("./model/HoldingModel");
 const { PositionModel } = require("./model/PositionModel");
 const { OrderModel } = require("./model/OrderModel");
 const { userModel } = require('./model/userModel.js');
-const { FundModel } = require('./model/FundModel.js');
+
 
 
 
@@ -22,20 +21,26 @@ const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 const cookieParser = require("cookie-parser");
 const AuthRoute = require('./Routes/AuthRoute.js')
+ const fundRoute = require('./Routes/FundRoute.js');
+const FundUsers = require("./model/FundUsers.js");
 const app = express();
+const jwt = require("jsonwebtoken");
+const { createSecretToken } = require("./util/SecretToken.js");
+
 
 app.use(cors({
   origin:[
   "http://localhost:3000",
-  "http://localhost:3001"],
+  "http://localhost:3001",
+],
   credentials: true
 }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-
 app.use("/",AuthRoute);
+app.use("/",fundRoute);
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
 //     {
@@ -229,9 +234,12 @@ app.get("/getOrder",async(req,res)=>{
   res.json(getOrder);
 })
 // Get Fund Details
-app.get("/funds", async (req, res) => {
-  let funds = await FundModel.find({});
-  res.json(funds);
+app.get("/funds/:userId", async (req, res) => {
+
+    const user = await FundUsers.findById(req.params.userId);
+
+    res.json(user);
+
 });
 // app.post("/Users" , async (req,res)=>{
 //   let newLogin = new LoginModel({
@@ -249,7 +257,6 @@ app.post("/newOrder", async (req, res) => {
     price: req.body.price,
     mode: req.body.mode,
   });
-
   newOrder.save();
 
   res.send("Order saved!");
@@ -292,29 +299,31 @@ app.get("/newOrder", async (req, res) => {
   res.json(newOrder);
 });
 //How to create a add Funds API
-app.post("/addFunds", async (req, res) => {
-  try {
-    console.log("Request Body:", req.body);
-    const fund = new Fund({
-      amount: req.body.amount,
-    });
+// app.post("/addFunds", async (req, res) => {
+//   try {
+//     console.log("Request Body:", req.body);
+//     const fund = new Fund({
+//       amount: req.body.amount,
+//     });
 
-    await fund.save();
+//     await fund.save();
 
-    res.json({
-      success: true,
-      message: "Funds Added Successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-});
-
+//     res.json({
+//       success: true,
+//       message: "Funds Added Successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// });
+// app.get("/", (req, res) => {
+//   res.send("Delphi Trade Funds API is running...");
+// });
 console.log(process.env.JWT_SECRET);
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log("App started!");
   mongoose.connect(uri);
   console.log("DB started!");

@@ -1,11 +1,10 @@
 const { Signup, Login , newOrder } = require('../Controllers/AuthController')
 const router = require('express').Router()
-const { userVerification} = require('../Middlewres/AuthMiddleware')
+const protect = require('../Middlewres/AuthMiddleware')
+// const { getFunds, addFunds, withdrawFunds } = require('../Controllers/FundController')
 
-// const { getOrders } = require("../Controllers/OrderController");
-
-// router.get("/order", newOrder);
 router.post('/signup', Signup)
 router.post('/login', Login)
-router.post('/verify', userVerification)
+router.post('/verify', protect)
+
 module.exports = router

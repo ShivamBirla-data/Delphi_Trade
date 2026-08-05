@@ -1,8 +1,9 @@
 const User = require("../model/userModel");
 const Order = require("../model/OrderModel");
-// const Users = require("../model/LoginModel");
-const { createSecretToken } = require("../util/SecretToken");
+const createSecretToken = require("../util/SecretToken");
 const bcrypt = require("bcryptjs");
+const AuthController = require("../Controllers/AuthController");
+const jwt = require("jsonwebtoken");
 
 module.exports.Signup = async (req, res, next) => {
   try {
@@ -12,8 +13,17 @@ module.exports.Signup = async (req, res, next) => {
     if (existingUser) {
       return res.json({ message: "User already exists" });
     }
-    const user = await User.create({ email, password, username, createdAt });
-    const token = createSecretToken(user._id);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+const user = await User.create({
+    username,
+    email,
+    password: hashedPassword,
+});
+console.log(user);
+    const token = jwt.sign({ id: user._id }, process.env.TOKEN_KEY, {
+      expiresIn: "1d",
+    });
     res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
@@ -26,34 +36,49 @@ module.exports.Signup = async (req, res, next) => {
     console.error(error);
   }
 };
-module.exports.Login = async (req, res, next) => {
-  try {
-    
-    const { email, password } = req.body;
-    // console.log(req.body);
-    if(!email || !password ){
-      return res.json({message:'All fields are required'})
+
+
+module.exports.Login = async (req, res) => {
+
+    try {
+
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+
+        if (!match) {
+            return res.json({
+                success: false,
+                message: "Wrong Password"
+            });
+        }
+
+        const token = createSecretToken(user._id);
+
+        console.log("Generated Token:", token);
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax"
+        });
+
+        return res.status(200).json({
+            success: true,
+            token
+        });
+
+    } catch (err) {
+        console.log(err);
     }
-    console.log(email);
-    const user = await User.findOne({ email });
-    if(!user){
-      return res.json({message:'Incorrect password or email' }) 
-    }
-    // console.log(auth);
-    const auth = await bcrypt.compare(password,user.password)
-    if (!auth) {
-      return res.json({message:'Incorrect password or email' }) 
-    }
-    // console.log(token);
-     const token = createSecretToken(user._id);
-     res.cookie("token", token, {
-       withCredentials: true,
-       httpOnly: false,
-     });
-     
-     res.status(201).json({ message: "User logged in successfully", success: true });
-     next()
-  } catch (error) {
-    console.error(error);
-  }
-};
+
+}

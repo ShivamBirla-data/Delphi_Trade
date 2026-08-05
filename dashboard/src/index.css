@@ -892,3 +892,91 @@ hr {
 .orders-table tr:nth-child(even) {
     background-color: #fafafa;
 }
+/* frontend/Pages/Funds.css
+   ---------------------------------------------------------------------------
+   Styling for the main Funds page.
+   --------------------------------------------------------------------------- */
+
+.funds-page {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 24px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.funds-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 20px;
+}
+
+.funds-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.funds-action-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-add {
+  background: #2f6fed;
+  color: #fff;
+}
+
+.btn-withdraw {
+  background: #ff8a00;
+  color: #fff;
+}
+
+.btn-open-account {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.funds-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.funds-info-card {
+  background: #f5f7fb;
+  border: 1px solid #e5e8f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.funds-info-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.funds-info-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.funds-info-value.positive {
+  color: #1a9e5c;
+}
+
+.funds-info-value.negative {
+  color: #d9304a;
+}
+
+.funds-loading,
+.funds-error {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+}

@@ -27,46 +27,48 @@ const Login = () => {
       position: "bottom-left",
     });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3002/login",
-        {
-          ...inputValue,
-        },
-        { withCredentials: true }
-      ); 
-      console.log("Login Response",data);
-      if (data.success) {
-      // Redirect to Dashboard application
-      // window.location.href = `http://localhost:3001/?username=${encodeURIComponent(data.user.username)}`;;
-      localStorage.setItem("user",JSON.stringify(data.user));
-      window.location.href ="http://localhost:3001";
-    } else {
-      alert(data.message);
-    }
-      console.log(data);
-      const { success, message } = data;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/home");
-        }, 1000);
-      } else {
-        handleError(message);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const { data } = await axios.post(
+      "http://localhost:3002/login",
+      inputValue,
+      {
+        withCredentials: true,
       }
-    } catch (error) {
-      console.log(error);
+    );
+
+    console.log(data.token);
+
+    if (data.success) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token); // Save the token to localStorage
+      console.log("Token saved to localStorage:", localStorage.getItem("token"));
+      handleSuccess(data.message);
+
+      setTimeout(() => {
+        window.location.href = "http://localhost:3001";
+      }, 1000);
+    } else {
+      handleError(data.message);
     }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-    });
-  };
+  } catch (error) {
+    console.log(error);
+
+    handleError(
+      error.response?.data?.message || "Login Failed"
+    );
+  }
+
+  setInputValue({
+    email: "",
+    password: "",
+  });
+};
 
   return (
+    
     <div className="form_container">
       <h2>Login Account</h2>
       <form onSubmit={handleSubmit}>

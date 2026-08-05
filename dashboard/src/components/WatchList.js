@@ -168,7 +168,7 @@ const WatchListActions = ({ uid }) => {
           title="Buy (B)"
           placement="top"
           arrow
-          TransitionComponent={Grow}
+          // TransitionComponent={Grow}
           onClick={handleBuyClick}
         >
           <button className="buy">Buy</button>
