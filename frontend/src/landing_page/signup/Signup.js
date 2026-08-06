@@ -33,35 +33,44 @@ const Signup = () => {
       position: "bottom-right",
     });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axios.post(
-        "http://localhost:3002/signup",
-        {
-          ...inputValue,
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3002/signup",
+      inputValue,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
         },
-        { withCredentials: true },
-      );
-      const { success, message } = data;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
-      } else {
-        handleError(message);
       }
-    } catch (error) {
-      console.log(error);
+    );
+
+    navigate("/login");
+    window.location.reload();
+    
+
+    handleSuccess("Account created successfully!");
+    console.log("Response:", response.data);
+
+  } catch (error) {
+    console.log("Axios Error:", error);
+
+    if (error.response) {
+      handleError(error.response.data.message || "Signup failed!");
+      console.log("Status:", error.response.status);
+      console.log("Data:", error.response.data);
+    } else if (error.request) {
+      handleError("No response from server");
+      console.log("No response from server");
+    } else {
+      handleError(error.message);
+      console.log("Error:", error.message);
     }
-    setInputValue({
-      ...inputValue,
-      email: "",
-      password: "",
-      username: "",
-    });
-  };
+  }
+};
 
   return (
     <div className="main-container">

@@ -1,8 +1,3 @@
-const Fund = require("../model/Fund");
-const User = require("../model/userModel");
-const FundUsers = require("../model/FundUsers");
-const jwt = require("jsonwebtoken");
-const { createSecretToken } = require("../util/SecretToken");
 // backend/Controllers/fundsController.js
 // -----------------------------------------------------------------------------
 // Business logic for the Funds module.
@@ -10,8 +5,9 @@ const { createSecretToken } = require("../util/SecretToken");
 // so req.user.id is available and identifies the logged-in user.
 // -----------------------------------------------------------------------------
 
-
-
+const User = require("../model/userModel.js");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 // -----------------------------------------------------------------------------
 // @route   POST /addFunds
 // @desc    Add money to the logged-in user's availableBalance
@@ -19,12 +15,19 @@ const { createSecretToken } = require("../util/SecretToken");
 // @body    { amount: Number }
 // -----------------------------------------------------------------------------
 const addFunds = async (req, res) => {
+   console.log("API Called");
+    console.log("Body:", req.body);
+    console.log("User:", req.user);
+
   try {
     const { amount } = req.body;
 
     // ---- Validation ----
-    if (amount === undefined || amount === null) {
-      return res.status(400).json({ success: false, message: "Amount is required." });
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid amount",
+      });
     }
 
     const numericAmount = Number(amount);
@@ -42,10 +45,14 @@ const addFunds = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found." });
     }
 
-    // ---- Update balance ----
-    user.availableBalance += numericAmount;
-    await user.save();
+     // Update balances
+    user.availableBalance += Number(amount);
+    user.openingBalance += Number(amount);
 
+    // Save changes
+    await user.save();
+  console.log("Saved Successfully");
+  
     // ---- Success response ----
     return res.status(200).json({
       success: true,
@@ -161,31 +168,3 @@ module.exports = {
   withdrawFunds,
   getFunds,
 };
-
-
-//         const user = await User.findById(req.params.userId);
-
-//         if (!user) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "User Not Found",
-//             });
-//         }
-
-//         res.json({
-//             openingBalance: user.openingBalance,
-//             availableBalance: user.availableBalance,
-//             usedMargin: user.usedMargin,
-//             pnl: user.pnl,
-//         });
-
-//     } catch (err) {
-
-//         res.status(500).json({
-//             success: false,
-//             message: err.message,
-//         });
-
-//     }
-
-// };

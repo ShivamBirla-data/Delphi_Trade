@@ -1,4 +1,4 @@
-// frontend/Popup/WithdrawPopup.jsx
+
 // -----------------------------------------------------------------------------
 // Popup shown when the user clicks "Withdraw".
 // - Takes an amount input.
@@ -9,7 +9,7 @@
 // -----------------------------------------------------------------------------
 
 import React, { useState } from "react";
-import { withdrawFunds } from "../../src/api/fundsApi";
+import { withdrawFunds } from "../api/fundsApi";
 import "./Popup.css";
 
 // Props:
@@ -41,16 +41,13 @@ const WithdrawPopup = ({ onClose, onSuccess }) => {
         onSuccess();
       } else {
         // e.g. backend responded 200 but success:false (rare, defensive check)
-        setError(
-          response.data.message || "Something went wrong. Please try again.",
-        );
+        setError(response.data.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
       // ---- Handle insufficient balance / other errors from backend ----
       // Backend returns 400 with a message like "Insufficient balance for this withdrawal."
       const message =
-        err.response?.data?.message ||
-        "Failed to withdraw funds. Please try again later.";
+        err.response?.data?.message || "Failed to withdraw funds. Please try again later.";
       setError(message);
     } finally {
       setLoading(false);
@@ -75,11 +72,7 @@ const WithdrawPopup = ({ onClose, onSuccess }) => {
         {error && <p className="popup-error">{error}</p>}
 
         <div className="popup-actions">
-          <button
-            className="popup-btn popup-btn-cancel"
-            onClick={onClose}
-            disabled={loading}
-          >
+          <button className="popup-btn popup-btn-cancel" onClick={onClose} disabled={loading}>
             Cancel
           </button>
           <button

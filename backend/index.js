@@ -19,19 +19,19 @@ const { userModel } = require('./model/userModel.js');
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
+
 const cookieParser = require("cookie-parser");
-const AuthRoute = require('./Routes/AuthRoute.js')
- const fundRoute = require('./Routes/FundRoute.js');
+const authRoute = require('./Routes/AuthRoute.js');
+const fundRoute = require('./Routes/fundsRoutes.js');
 const FundUsers = require("./model/FundUsers.js");
 const app = express();
-const jwt = require("jsonwebtoken");
-const { createSecretToken } = require("./util/SecretToken.js");
 
 
 app.use(cors({
   origin:[
   "http://localhost:3000",
   "http://localhost:3001",
+  
 ],
   credentials: true
 }));
@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use("/",AuthRoute);
+app.use("/",authRoute);
 app.use("/",fundRoute);
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
@@ -323,8 +323,8 @@ app.get("/newOrder", async (req, res) => {
 //   res.send("Delphi Trade Funds API is running...");
 // });
 console.log(process.env.JWT_SECRET);
-app.listen(process.env.PORT, () => {
-  console.log("App started!");
+app.listen(PORT, () => {
+  console.log(`App started! ${PORT}`);
   mongoose.connect(uri);
   console.log("DB started!");
 });

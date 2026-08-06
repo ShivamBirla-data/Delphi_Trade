@@ -39,22 +39,33 @@ const handleSubmit = async (e) => {
       }
     );
 
-    console.log(data.token);
+    console.log("Response:", data);
 
     if (data.success) {
+      // Save user data
       localStorage.setItem("user", JSON.stringify(data.user));
-      localStorage.setItem("token", data.token); // Save the token to localStorage
-      console.log("Token saved to localStorage:", localStorage.getItem("token"));
+
+      // Save token
+      localStorage.setItem("token", data.token);
+
+      console.log(
+        "Token saved:",
+        localStorage.getItem("token")
+      );
+
       handleSuccess(data.message);
 
+      // Redirect after 1 second
       setTimeout(() => {
-        window.location.href = "http://localhost:3001";
+        window.location.href = "http://localhost:3001/";
       }, 1000);
+
     } else {
       handleError(data.message);
     }
+
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     handleError(
       error.response?.data?.message || "Login Failed"
