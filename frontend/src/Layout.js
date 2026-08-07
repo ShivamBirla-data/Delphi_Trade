@@ -13,11 +13,11 @@ import ProductPage from "./landing_page/products/ProductPage";
 import PricingPage from "./landing_page/pricing/PricingPage";
 import Support from "./landing_page/support/SupportPage";
 import NotFound from "./landing_page/NotFound";
-
+import ForgotPassword from "./landing_page/signup/ForgetPassword";
 function Layout() {
   const location = useLocation();
 
-  const hideLayout = ["/signup", "/login", "/home"].includes(
+  const hideLayout = ["/signup", "/login", "/home", "/forgot-password"].includes(
     location.pathname
   );
 
@@ -29,6 +29,7 @@ function Layout() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/product" element={<ProductPage />} />

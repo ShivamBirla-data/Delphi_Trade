@@ -5,34 +5,67 @@ import './BuyActionWindow.css';
 import GeneralContext from "./GeneralContext";
 import { useNavigate } from "react-router-dom";
 
-const BuyActionWindow = ({ uid }) => {
-
+const BuyActionWindow = ({ uid, closeBuyWindow }) => {
+  const [stockName, setStockName] = useState(uid);
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0);
-  const { closeBuyWindow } = useContext(GeneralContext);
-  const navigate = useNavigate();
+  // use context if needed in future
+  useContext(GeneralContext);
+  
 
-  const handleBuyClick = async () => {
+  // const handleBuyClick = async () => {
 
-    try {
+  //   try {
 
-      await axios.post("http://localhost:3002/newOrder", {
-        name: uid,
+  //     await axios.post("http://localhost:3002/newOrder", {
+  //       name: uid,
+  //       qty: stockQuantity,
+  //       price: stockPrice,
+  //       mode: "BUY",
+  //     });
+
+  //     closeBuyWindow();
+  //      window.location.reload();
+  //      // Redirect to Orders page
+  //     navigate("/orders");
+
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+const handleBuyClick = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3002/newOrder",
+      {
+        name: stockName,
         qty: stockQuantity,
         price: stockPrice,
-        mode: "BUY",
-      });
+      },
+      {
+        withCredentials: true,
+      }
+    );
 
-      closeBuyWindow();
-       window.location.reload();
-       // Redirect to Orders page
-      navigate("/orders");
+      if (response.data.success) {
 
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  closeBuyWindow();
 
+  window.location.href =
+    "http://localhost:3001/orders";
+}
+
+    console.log("BUY RESPONSE:", response.data);
+
+  } catch (error) {
+
+    console.log(
+      "BUY ERROR:",
+      error.response?.data
+    );
+
+  }
+};
   const handleCancelClick = () => {
     closeBuyWindow();
   };

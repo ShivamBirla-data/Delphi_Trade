@@ -15,11 +15,25 @@ console.log("Cookie Token:", req.cookies.token);
       });
     }
 
-    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    // const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    jwt.verify(
+      token,
+      process.env.TOKEN_KEY,
+      (err, decoded) => {
+        if (err) {
+          console.log("JWT ERROR:", err);
 
-    req.user = decoded;
+          return res.status(401).json({
+            success: false,
+            message: "Invalid or expired token",
+          });
+        }
 
-    next();
+        req.user = decoded;
+
+        next();
+      }
+    );
   } catch (err) {
     console.error(err);
 

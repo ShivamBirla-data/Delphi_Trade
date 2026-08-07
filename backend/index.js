@@ -23,6 +23,7 @@ const uri = process.env.MONGO_URL;
 const cookieParser = require("cookie-parser");
 const authRoute = require('./Routes/AuthRoute.js');
 const fundRoute = require('./Routes/fundsRoutes.js');
+const orderRoute = require('./Routes/OrderRoute.js');
 const FundUsers = require("./model/FundUsers.js");
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use("/",authRoute);
 app.use("/",fundRoute);
+app.use("/",orderRoute);
 // app.get("/addHoldings", async (req, res) => {
 //   let tempHoldings = [
 //     {
@@ -229,10 +231,10 @@ app.post("/users" , async (req,res)=>{
   newSignup.save();
   res.send("Signup Successfully...");
 })
-app.get("/getOrder",async(req,res)=>{
-  let getOrder = await OrderModel.find({});
-  res.json(getOrder);
-})
+// app.get("/getOrder",async(req,res)=>{
+//   let getOrder = await OrderModel.find({});
+//   res.json(getOrder);
+// })
 // Get Fund Details
 app.get("/funds/:userId", async (req, res) => {
 
@@ -241,26 +243,17 @@ app.get("/funds/:userId", async (req, res) => {
     res.json(user);
 
 });
-// app.post("/Users" , async (req,res)=>{
-//   let newLogin = new LoginModel({
-//     email : req.body.email,
-//     password: req.body.password
+// app.post("/newOrder", async (req, res) => {
+//   let newOrder = new OrderModel({
+//     name: req.body.name,
+//     qty: req.body.qty,
+//     price: req.body.price,
+//     mode: req.body.mode,
 //   });
-//   newSignup.save();
-//   res.send("Login Successfully...");
-// })
+//   newOrder.save();
 
-app.post("/newOrder", async (req, res) => {
-  let newOrder = new OrderModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  });
-  newOrder.save();
-
-  res.send("Order saved!");
-});
+//   res.send("Order saved!");
+// });
 //How to create a sell button api
 app.post("/sell", async (req, res) => {
   try {

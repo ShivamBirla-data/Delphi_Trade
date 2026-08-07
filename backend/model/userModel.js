@@ -43,6 +43,16 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0, // Realized + unrealized Profit & Loss
     },
+     // Forgot Password fields
+    resetOTP: {
+      type: String,
+      default: null,
+    },
+
+    resetOTPExpire: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true } // adds createdAt / updatedAt automatically
 );

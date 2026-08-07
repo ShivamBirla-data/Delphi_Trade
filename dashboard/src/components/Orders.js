@@ -1,78 +1,98 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Orders() {
+const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
-    console.log("Order Page Loaded");
     const getOrders = async () => {
       try {
-        const response = await axios.get("http://localhost:3002/getOrder");
+        const response = await axios.get(
+          "http://localhost:3002/getOrder",
+          {
+            withCredentials: true,
+          }
+        );
 
-        console.log(response.data);
-
-        setOrders(response.data);
-         
+        console.log("Orders API Response:", response.data);
+       if (response.data.success) {
+          setOrders(response.data.orders || []);
+        }
       } catch (error) {
-        console.log(error);
+        console.log(
+          "Orders Error:",
+          error.response?.data || error.message
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
     getOrders();
   }, []);
 
- return (
+  if (loading) {
+    return <h3>Loading Orders...</h3>;
+  }
+
+  return (
     <div className="orders-container">
 
-      <h2>Orders</h2>
+      <h2>My Orders</h2>
 
-      <h3 className="total-orders">
-        Total Orders : {orders.length}
-      </h3>
+      {orders.length === 0 ? (
+        <p>No orders found.</p>
+      ) : (
+        <table className="orders-table">
 
-
-      <table className="orders-table">
-
-        <thead>
-
-          <tr>
-            <th>Stock</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Mode</th>
-          </tr>
-
-        </thead>
-
-
-        <tbody>
-
-          {orders.map((item) => (
-
-            <tr key={item._id}>
-
-              <td>{item.name}</td>
-
-              <td>{item.qty}</td>
-
-              <td>₹ {item.price}</td>
-
-              <td>{item.mode}</td>
-
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
+              <th>Type</th>
             </tr>
+          </thead>
 
-          ))}
+          <tbody>
+            {orders.map((order) => (
+              <tr key={order._id}>
 
-        </tbody>
+                <td>{order.name}</td>
 
+                <td>{order.qty}</td>
 
-      </table>
+                <td>₹{order.price}</td>
+
+                <td>
+                  ₹{Number(order.qty) * Number(order.price)}
+                </td>
+
+                <td>
+                  <span
+                    className={
+                      order.mode === "BUY"
+                        ? "buy"
+                        : "sell"
+                    }
+                  >
+                    {order.mode}
+                  </span>
+                </td>
+
+             
+
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+      )}
 
     </div>
-);
-}
+  );
+};
 
 export default Orders;

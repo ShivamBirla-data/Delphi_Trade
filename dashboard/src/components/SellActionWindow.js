@@ -10,26 +10,54 @@ function SellActionWindow({ uid }) {
   const [price, setPrice] = useState(0);
   const navigate = useNavigate();
 
-  const handleSell = async () => {
-    try {
-      await axios.post("http://localhost:3002/sell", {
-        name: uid,
-        qty,
-        price,
-        mode: "SELL",
-      });
+  // const handleSell = async () => {
+  //   try {
+  //     await axios.post("http://localhost:3002/sell", {
+  //       name: uid,
+  //       qty,
+  //       price,
+  //       mode: "SELL",
+  //     });
 
-      alert("Sell Order Placed");
-      closeSellWindow();
-      window.location.reload();
-       // Redirect to Orders page
-    navigate("/orders");
+  //     alert("Sell Order Placed");
+  //     closeSellWindow();
+  //     window.location.reload();
+  //      // Redirect to Orders page
+  //   navigate("/orders");
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+const handleSell = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:3002/sellOrder",
+      {
+          name: uid || "",
+          qty: Number(qty),
+          price: Number(price),
+        },
+      {
+        withCredentials: true,
+      }
+    );
+ if (response.data.success) {
 
+  closeSellWindow();
+
+  window.location.href =
+    "http://localhost:3001/orders";
+}
+    console.log("SELL RESPONSE:", response.data);
+
+  } catch (error) {
+    console.log(
+      "SELL ERROR:",
+      error.response?.data || error.message
+    );
+  }
+};
   return (
     <div className="sell-overlay">
       <div className="sell-window">

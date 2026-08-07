@@ -99,7 +99,7 @@ const Funds = () => {
 
           <div className="funds-info-card">
             <div className="funds-info-label">Available Balance</div>
-            <div className="funds-info-value">₹{funds.availableBalance}</div>
+            <div className="funds-info-value">₹{funds.availableBalance.toFixed(2)}</div>
           </div>
 
           <div className="funds-info-card">

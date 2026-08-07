@@ -1,0 +1,38 @@
+.orders-container {
+  width: 95%;
+  margin: 30px auto;
+}
+
+.orders-container h2 {
+  margin-bottom: 20px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.orders-table th {
+  font-weight: 600;
+  background: #f5f5f5;
+}
+
+.orders-table tr:hover {
+  background: #f9f9f9;
+}
+
+.buy {
+  font-weight: bold;
+}
+
+.sell {
+  font-weight: bold;
+}

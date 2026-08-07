@@ -27,7 +27,8 @@ function Team() {
           <h4 className="mt-5">Satyam Gupta</h4>
           <h6></h6>
         </div>
-        <div className="col-6 p-3">
+      </div>
+         <div className="text-center fs-6 p-3" style={{ lineHeight: "1.8", fontSize: "1.2em" }}>
           <p>
            Satyam and Shivam bootstrapped and founded Delphi Trade with the vision of making stock market investing and trading simple, secure, and accessible for everyone. Their goal is to empower users with a modern trading platform that combines powerful technology with an intuitive user experience.
           </p>
@@ -41,8 +42,8 @@ function Team() {
             
           </p>
         </div>
-      </div>
     </div>
+    
   );
 }
 
